@@ -1,0 +1,107 @@
+sources:
+  - name: atomic_adtech
+    database: demo_atomic_adtech
+    tables:
+      - name: ext_advertiser
+        external:
+          url: "s3://demo-atomic-adtech/advertiser"
+          object_pattern: "*advertiser*"
+          type: '("PARQUET")'
+        columns:
+          - name: advertiser_id
+            data_type: bigint
+          - name: "advertiser_name"
+            data_type: text
+      - name: ext_campaign
+        external:
+          url: "s3://demo-atomic-adtech/campaign"
+          object_pattern: "*campaign*"
+          type: '("PARQUET")'
+        columns:
+          - name: campaign_id
+            data_type: bigint
+          - name: advertiser_id 
+            data_type: bigint
+          - name: "campaign_name"
+            data_type: text
+      - name: ext_publisher
+        external:
+          url: "s3://demo-atomic-adtech/publisher"
+          object_pattern: "*publisher*"
+          type: '("PARQUET")'
+        columns:
+          - name: publisher_id
+            data_type: bigint
+          - name: "publisher_name"
+            data_type: text
+      - name: ext_publisher_channel
+        external:
+          url: "s3://demo-atomic-adtech/publisher_channel"
+          object_pattern: "*publisher_channel*"
+          type: '("PARQUET")'
+        columns:
+          - name: publisher_channel_id
+            data_type: bigint
+          - name: publisher_id
+            data_type: bigint
+          - name: "publisher_channel_name"
+            data_type: text
+      - name: ext_session_log
+        external:
+          url: "s3://demo-atomic-adtech/session_log"
+          object_pattern: "*session_log*"
+          type: '("PARQUET")'
+        columns:
+          - name: "userid"
+            data_type: DOUBLE PRECISION
+          - name: "event_name"
+            data_type: TEXT
+          - name: "session_id"
+            data_type: TEXT
+          - name: "campaign_id"
+            data_type: INTEGER
+          - name: "page_url"
+            data_type: TEXT
+          - name: "event_time"
+            data_type: TIMESTAMP
+          - name: "event_month"
+            data_type: TIMESTAMP
+          - name: "user_demographics"
+            data_type: TEXT
+          - name: "revenue"
+            data_type: DOUBLE PRECISION
+      - name: advertiser
+        columns:
+        - name: advertiser_id
+          tests:
+            - unique
+            - not_null
+      - name: campaign
+        columns:
+        - name: campaign_id
+          tests:
+            - unique
+            - not_null      
+        - name: advertiser_id
+          tests:
+            - relationships:
+                to: ref('advertiser')
+                field: advertiser_id
+      - name: publisher
+        columns:
+        - name: publisher_id
+          tests:
+            - unique
+            - not_null
+      - name: publisher_channel
+        columns:
+        - name: publisher_channel_id
+          tests:
+            - unique
+            - not_null      
+        - name: publisher_id
+          tests:
+            - relationships:
+                to: ref('publisher')
+                field: publisher_id
+      

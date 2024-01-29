@@ -1,0 +1,28 @@
+[0m11:36:06.861354 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002BA0E468190>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002BA0C83AF90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002BA0E4A3C50>]}
+
+
+============================== 11:36:06.869228 | 8de84bbc-0e5f-4bfe-9d43-7132d64a637b ==============================
+[0m11:36:06.869228 [info ] [MainThread]: Running with dbt=1.7.6
+[0m11:36:06.871246 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': 'C:\\Users\\robwork\\.dbt', 'version_check': 'True', 'fail_fast': 'False', 'log_path': 'logs', 'warn_error': 'None', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'introspect': 'True', 'log_format': 'default', 'target_path': 'None', 'invocation_command': 'dbt init', 'send_anonymous_usage_stats': 'True'}
+[0m11:36:10.229780 [debug] [MainThread]: Starter project path: C:\Users\robwork\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\dbt\include\starter_project
+[0m11:36:10.295399 [info ] [MainThread]: 
+Your new dbt project "atomic" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m11:36:10.297399 [info ] [MainThread]: Setting up your profile.
+[0m11:36:14.313532 [info ] [MainThread]: No sample profile found for firebolt.
+[0m11:36:14.315664 [debug] [MainThread]: Command `dbt init` succeeded at 11:36:14.314574 after 7.50 seconds
+[0m11:36:14.315664 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002BA0E4C7A90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002BA0E4C7B90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002BA08065790>]}
+[0m11:36:14.316562 [debug] [MainThread]: Flushing usage events
