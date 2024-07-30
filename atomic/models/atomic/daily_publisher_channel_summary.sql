@@ -24,13 +24,13 @@ where source_file_timestamp > (select max(max_source_file_timestamp) from daily_
 ,src as (
 
 SELECT userid as userid
-	,FLATTEN(nest(events)) AS events
-	,FLATTEN(array_concat(NEST(revenues))) AS revenues
+	,ARRAY_FLATTEN(ARRAY_AGG(events)) AS events
+	,ARRAY_FLATTEN(array_concat(ARRAY_AGG(revenues))) AS revenues
 	,session_id
 	,max(campaign_id) as campaign_id
 	, publisher_channel_id
 	,page_url
-	,FLATTEN(array_concat(nest(event_times))) AS event_times
+	,ARRAY_FLATTEN(array_concat(ARRAY_AGG(event_times))) AS event_times
 	,MIN(coalesce(session_time, '2000-01-01')) AS session_time
 	,date_trunc('month', MIN(session_month)) AS session_month
 	,COALESCE(MIN(event_date)::DATE, '2000-01-01') AS event_date
@@ -97,9 +97,9 @@ SELECT event_date AS session_day
 				,'click'
 				)
 			)::INT) AS latent_conversions
-	,SUM(ELEMENT_AT(revenues, INDEX_OF(events, 'impression'))) AS impression_revenue
-	,SUM(ELEMENT_AT(revenues, INDEX_OF(events, 'click'))) AS click_revenue
-	,SUM(ELEMENT_AT(revenues, INDEX_OF(events, 'conversion'))) AS conversion_revenue
+	,SUM(revenues[ INDEX_OF(events, 'impression')]) AS impression_revenue
+	,SUM(revenues[ INDEX_OF(events, 'click')]) AS click_revenue
+	,SUM(revenues[ INDEX_OF(events, 'conversion')]) AS conversion_revenue
 	,SUM(CASE 
 			WHEN (
 					CONTAINS (
@@ -111,10 +111,9 @@ SELECT event_date AS session_day
 						,'impression'
 						)
 					)
-				THEN ELEMENT_AT(revenues, 
-				                INDEX_OF(events, 'impression')) + 
-								ELEMENT_AT(revenues, INDEX_OF(events, 'click')) + 
-								ELEMENT_AT(revenues, INDEX_OF(events, 'conversion'))
+				THEN revenues[INDEX_OF(events, 'impression')] + 
+				revenues[ INDEX_OF(events, 'click')] + 
+				revenues[ INDEX_OF(events, 'conversion')]
 			ELSE 0
 			END) AS fraudulent_revenue
 	,MAX(source_file_timestamp) AS max_source_file_timestamp

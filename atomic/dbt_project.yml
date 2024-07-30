@@ -19,6 +19,10 @@ seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
+dispatch:
+  - macro_namespace: dbt_external_tables
+    search_order: ['dbt', 'dbt_external_tables']
+
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"

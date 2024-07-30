@@ -16,13 +16,13 @@
 with
   src as (
     select
-      publisher_channel_id, publisher_id, publisher_channel_name, source_file_name, source_file_timestamp::timestampntz as source_file_timestamp
+      publisher_channel_id, publisher_id, publisher_channel_name, $source_file_name as source_file_name, $source_file_timestamp::timestampntz as source_file_timestamp
     from
       {{ source ('atomic_adtech', 'ext_publisher_channel') }}
   
   {%- if is_incremental()  %}
     where
-      source_file_timestamp > (
+      $source_file_timestamp > (
         select
           coalesce(max(source_file_timestamp), '1980-01-01')
         from
@@ -35,8 +35,15 @@ with
 --finally, from that CTE, we find the most recent state of every entity by key
 select
   publisher_channel_id, publisher_id, publisher_channel_name, source_file_name, source_file_timestamp
-from
-  {{ source ('atomic_adtech', 'ext_publisher_channel') }}
-   
+from src
+WHERE (publisher_channel_id,source_file_timestamp) in (
+
+    select
+      publisher_channel_id,
+      max(source_file_timestamp)
+    from
+      src
+    group by all
+)
     
   

@@ -4,9 +4,10 @@ sources:
     tables:
       - name: ext_advertiser
         external:
-          url: "s3://demo-atomic-adtech/advertiser"
-          object_pattern: "*advertiser*"
-          type: '("PARQUET")'
+          url: "s3://firebolt-sample-datasets-public-us-east-1/adtech/advertiser"
+          object_pattern: "**"
+          compression: GZIP 
+          type: '("csv" skip_header_rows = TRUE)'
         columns:
           - name: advertiser_id
             data_type: bigint
@@ -14,9 +15,10 @@ sources:
             data_type: text
       - name: ext_campaign
         external:
-          url: "s3://demo-atomic-adtech/campaign"
-          object_pattern: "*campaign*"
-          type: '("PARQUET")'
+          url: "s3://firebolt-sample-datasets-public-us-east-1/adtech/campaign"
+          object_pattern: "**"
+          compression: GZIP 
+          type: '("csv" skip_header_rows = TRUE)'
         columns:
           - name: campaign_id
             data_type: bigint
@@ -26,9 +28,10 @@ sources:
             data_type: text
       - name: ext_publisher
         external:
-          url: "s3://demo-atomic-adtech/publisher"
-          object_pattern: "*publisher*"
-          type: '("PARQUET")'
+          url: "s3://firebolt-sample-datasets-public-us-east-1/adtech/publisher"
+          object_pattern: "**"
+          compression: GZIP 
+          type: '("csv" skip_header_rows = TRUE)'
         columns:
           - name: publisher_id
             data_type: bigint
@@ -36,9 +39,10 @@ sources:
             data_type: text
       - name: ext_publisher_channel
         external:
-          url: "s3://demo-atomic-adtech/publisher_channel"
-          object_pattern: "*publisher_channel*"
-          type: '("PARQUET")'
+          url: "s3://firebolt-sample-datasets-public-us-east-1/adtech/publisher_channel"
+          object_pattern: "**"
+          compression: GZIP 
+          type: '("csv" skip_header_rows = TRUE)'
         columns:
           - name: publisher_channel_id
             data_type: bigint
@@ -48,9 +52,10 @@ sources:
             data_type: text
       - name: ext_session_log
         external:
-          url: "s3://demo-atomic-adtech/session_log"
-          object_pattern: "*session_log*"
-          type: '("PARQUET")'
+          url: "s3://firebolt-sample-datasets-public-us-east-1/adtech/session_log"
+          object_pattern: "**"
+          compression: GZIP 
+          type: '("csv" skip_header_rows = TRUE)'
         columns:
           - name: "userid"
             data_type: DOUBLE PRECISION

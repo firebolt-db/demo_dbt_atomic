@@ -16,12 +16,12 @@
 with
   src as (
     select
-      campaign_id, advertiser_id, campaign_name, source_file_name, source_file_timestamp::timestampntz as source_file_timestamp
+      campaign_id, advertiser_id, campaign_name, $source_file_name as source_file_name, $source_file_timestamp::timestampntz as source_file_timestamp
     from
       {{ source ('atomic_adtech', 'ext_campaign') }}
     {%- if is_incremental()  %}
     where
-      source_file_timestamp > (
+      $source_file_timestamp > (
         select
           coalesce(max(source_file_timestamp), '1980-01-01')
         from

@@ -1,13 +1,12 @@
 atomic:
-  target: dev
   outputs:
-    dev:
+    fb_app:
       type: firebolt
-      client_id: <some client_id>
-      client_secret: <some secret>
-      database: demo_atomic_adtech
-      schema: public
-      threads: 10
-      host: api.go.firebolt.io
-      account_name: workshop-dev
-      engine_name: demo_atomic_adtech_general_purpose
+      client_id: "{{ env_var('FIREBOLT_CLIENT_ID') }}"
+      client_secret: "{{ env_var('FIREBOLT_CLIENT_SECRET') }}"
+      account_name: demo
+      database: temp
+      engine_name: elt_engine
+      schema: test
+      threads: 1
+  target: fb_app
