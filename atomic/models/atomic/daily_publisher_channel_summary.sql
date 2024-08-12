@@ -11,9 +11,9 @@
 
 --first, we want to find all sessions included in any files imported since the last import
 --since there are new rows for them, they need to be summarized and merged into the summary table
-with session_filter as (select session_id from session_log 
+with session_filter as (select session_id from {{ ref('session_log') }}
 {%- if is_incremental()  %}
-where source_file_timestamp > (select max(max_source_file_timestamp) from daily_publisher_channel_summary)
+where source_file_timestamp > (select max(max_source_file_timestamp) from {{ this }})
 
 {%- endif %}
 )
@@ -37,7 +37,7 @@ SELECT userid as userid
 	,user_demographics
 	,MAX(source_file_name) AS source_file_name
 	,MAX(source_file_timestamp) AS source_file_timestamp
-FROM session_log 
+FROM {{ ref('session_log') }} 
 where session_id in (select session_id from session_filter)
 
 GROUP BY ALL
@@ -117,7 +117,7 @@ SELECT event_date AS session_day
 			ELSE 0
 			END) AS fraudulent_revenue
 	,MAX(source_file_timestamp) AS max_source_file_timestamp
-FROM  {{ ref('session_log') }}
+FROM  src
 GROUP BY ALL
 
 
