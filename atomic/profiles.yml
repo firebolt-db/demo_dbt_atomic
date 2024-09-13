@@ -6,7 +6,16 @@ atomic:
       client_secret: "{{ env_var('FIREBOLT_CLIENT_SECRET') }}"
       account_name: demo
       database: temp
-      engine_name: elt_engine
+      engine_name: serving_engine
+      schema: test
+      threads: 1
+    fb_app_single:
+      type: firebolt
+      client_id: "{{ env_var('FIREBOLT_CLIENT_ID') }}"
+      client_secret: "{{ env_var('FIREBOLT_CLIENT_SECRET') }}"
+      account_name: demo
+      database: temp
+      engine_name: single_node_elt_engine
       schema: test
       threads: 1
   target: fb_app
